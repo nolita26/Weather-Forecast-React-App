@@ -15,7 +15,7 @@ const App = () => {
     setForecast(data.forecast);
   };
 
-  return (
+return (
       <div className="container mx-auto p-4">
         <CitySelection onSearch={handleSearch} />
         {weather && (

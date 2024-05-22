@@ -3,7 +3,7 @@ import Map, { Source, Layer } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const WeatherPreview = ({ city, weather }) => {
-    const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+    const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
     const heatmapLayer = {
         id: 'heatmap',
@@ -54,37 +54,44 @@ const WeatherPreview = ({ city, weather }) => {
     };
 
     return (
-        <div className="mb-4">
-        <h2 className="text-xl font-bold">{city}</h2>
-        <Map initialViewState={{
-            longitude: weather.coord.lon,
-            latitude: weather.coord.lat,
-            zoom: 10,
-            }}
-            style={{ width: '100%', height: 400 }}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            mapboxAccessToken={MAPBOX_TOKEN}
-        >
-            <Source id="weather" type="geojson" data={{
-            "type": "FeatureCollection",
-            "features": [
-                {
-                "type": "Feature",
-                "properties": {
-                    "magnitude": weather.main.temp
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [weather.coord.lon, weather.coord.lat]
-                }
-                }
-            ]
-            }}>
-            <Layer {...heatmapLayer} />
-            </Source>
-        </Map>
+        <div className="container mx-auto p-2 bg-white rounded-lg shadow-lg mb-4">
+            <div className="mb-4 text-center">
+                <h2 className="text-2xl font-bold text-gray-800 ">{city}</h2>
+                <p className="text-gray-600 mb-4">Current temperature: {weather.main.temp}°C</p>
+            </div>
+            <div className="relative h-96">
+                <Map
+                    initialViewState={{
+                        longitude: weather.coord.lon,
+                        latitude: weather.coord.lat,
+                        zoom: 10,
+                    }}
+                    style={{ width: '100%', height: '100%' }}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    mapboxAccessToken={MAPBOX_TOKEN}
+                >
+                    <Source id="weather" type="geojson" data={{
+                        "type": "FeatureCollection",
+                        "features": [
+                            {
+                                "type": "Feature",
+                                "properties": {
+                                    "magnitude": weather.main.temp
+                                },
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [weather.coord.lon, weather.coord.lat]
+                                }
+                            }
+                        ]
+                    }}>
+                        <Layer {...heatmapLayer} />
+                    </Source>
+                </Map>
+            </div>
         </div>
     );
 };
+
 
 export default WeatherPreview;

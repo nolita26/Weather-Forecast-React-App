@@ -1,7 +1,7 @@
 # Weather-Forecast-React-App
 Built a weather map web-app that allows users to view the current weather conditions—such as sunny, cloudy, rainy, or snowy—for any city they search.
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was created with [Create React App]:
 
